@@ -1,0 +1,15 @@
+*.db
+
+
+
+
+
+*.vc*
+
+*.txt
+
+stdafx.h
+stdafx.cpp
+targetver.h
+Debug/
+*.rar
