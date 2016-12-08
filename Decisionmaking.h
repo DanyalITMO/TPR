@@ -7,6 +7,7 @@ using criterionsVector = std::vector<std::pair<std::string, float>>;
 using optionsVector = std::vector<std::string>;
 using byte = char;
 using preferenceTablesVector = std::vector<std::vector<std::vector<byte>>>;
+using responseDomination = std::vector<std::pair<int, std::vector<int>>>;
 
 
 class Decionmaking
@@ -16,7 +17,7 @@ class Decionmaking
 	preferenceTablesVector preferenceTables;
 public:
 	Decionmaking();
-	const std::vector<std::pair<std::string, int>> domination();
+	const responseDomination domination();
 	//void print();
 };
 

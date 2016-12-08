@@ -8,13 +8,16 @@
 int _tmain(int argc, _TCHAR* argv[])
 {
 	Decionmaking temp;
-	const std::vector<std::pair<std::string, int>> domination_response = temp.domination();
+	const responseDomination domination_response = temp.domination();
 
-	std::cout << domination_response.size()<<std::endl;
-	/*for (const auto& i : domination_response)
+	for (const auto& i : domination_response)
 	{
-		std::cout << i.first << "|" << i.second << std::endl;
-	}*/
+		std::cout << std::endl <<"row: "<< i.first << ":";
+		for (const auto& arg : i.second)
+		{
+			std::cout<< arg<<",";
+		}
+	}
 	system("Pause");
 	return 0;
 }

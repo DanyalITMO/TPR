@@ -67,34 +67,33 @@ Decionmaking::Decionmaking()
 }
 
 
-const std::vector<std::pair<std::string, int>> Decionmaking::domination()
+const responseDomination Decionmaking::domination()
 {
-	std::vector<std::pair<std::string, int>> response;
+	responseDomination response;
 	std::vector<int> row_sum;
 
-	for (auto& preferenceTable : preferenceTables)
+	for (int number_of_table = 0; number_of_table < preferenceTables.size(); number_of_table++)
 	{
 		row_sum.clear();
 	
-		for (auto& row_from_table : preferenceTable)
+		for (auto& row_from_table : preferenceTables[number_of_table])
 		{
 			row_sum.push_back(std::accumulate(row_from_table.begin(), row_from_table.end(), 0));
 		}
 
-		size_t max_sum = 0;
-		size_t row_index = 0;
+		size_t max_sum = *std::max_element(row_sum.begin(), row_sum.end());
+		std::vector<int> row_indices;
 
-		for (int i = 0; i < preferenceTable.size(); i++)
+		for (int i = 0; i < row_sum.size(); i++)
 		{
-			if (row_sum[i] > max_sum)
+			if (row_sum[i] >= max_sum)
 			{
 				max_sum = row_sum[i];
-				row_index = i;
+				row_indices.push_back(i);
 			}
 		}
-		response.push_back(std::pair<std::string, int>(criterions.at(row_index).first, row_index));
-	}
 
-	std::cout << response.size()<<std::endl;
+		response.push_back(std::pair<int, std::vector<int>>(number_of_table, row_indices));
+	}
 	return response;
 }
