@@ -8,14 +8,29 @@
 int _tmain(int argc, _TCHAR* argv[])
 {
 	Decionmaking temp;
+
+	std::cout << "domination";
 	const responseDomination domination_response = temp.domination();
 
 	for (const auto& i : domination_response)
 	{
-		std::cout << std::endl <<"row: "<< i.first << ":";
+		std::cout << std::endl <<"table: "<< i.first + 1 << ":";
 		for (const auto& arg : i.second)
 		{
-			std::cout<< arg<<",";
+			std::cout<< arg+1<<",";
+		}
+	}
+
+	std::cout << std::endl;
+	std::cout << "blocking";
+	const responseDomination domination_blocking = temp.blocking();
+
+	for (const auto& i : domination_blocking)
+	{
+		std::cout << std::endl << "table: " << i.first + 1 << ":";
+		for (const auto& arg : i.second)
+		{
+			std::cout << arg + 1 << ",";
 		}
 	}
 	system("Pause");

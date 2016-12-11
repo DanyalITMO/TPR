@@ -18,6 +18,7 @@ class Decionmaking
 public:
 	Decionmaking();
 	const responseDomination domination();
+	const responseDomination blocking();
 	//void print();
 };
 

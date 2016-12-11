@@ -86,9 +86,8 @@ const responseDomination Decionmaking::domination()
 
 		for (int i = 0; i < row_sum.size(); i++)
 		{
-			if (row_sum[i] >= max_sum)
+			if (row_sum[i] == max_sum)
 			{
-				max_sum = row_sum[i];
 				row_indices.push_back(i);
 			}
 		}
@@ -97,3 +96,42 @@ const responseDomination Decionmaking::domination()
 	}
 	return response;
 }
+
+
+const responseDomination Decionmaking::blocking()
+{
+	responseDomination response;
+	std::vector<int> column_sum;
+
+	for (int number_of_table = 0; number_of_table < preferenceTables.size(); number_of_table++)
+	{
+		column_sum.clear();
+
+		for (int i = 0; i < preferenceTables[number_of_table].size(); i++)
+		{
+			size_t sum = 0;
+
+			std::for_each(preferenceTables[number_of_table].begin(), preferenceTables[number_of_table].end(), [&i, &sum](auto& row) {
+				sum += row.at(i);
+			});
+
+			column_sum.push_back(sum);
+		}
+
+		size_t min_sum = *std::min_element(column_sum.begin(), column_sum.end());
+		std::vector<int> column_indices;
+
+		for (int i = 0; i < column_sum.size(); i++)
+		{
+			if (column_sum[i] == min_sum)
+			{
+				column_indices.push_back(i);
+			}
+		}
+
+		response.push_back(std::pair<int, std::vector<int>>(number_of_table, column_indices));
+	}
+	return response;
+}
+
+
