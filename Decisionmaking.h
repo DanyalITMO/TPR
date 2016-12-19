@@ -19,6 +19,9 @@ public:
 	Decionmaking();
 	const responseDomination domination();
 	const responseDomination blocking();
+	
+	void tournamentMechanism();
+
 	//void print();
 };
 

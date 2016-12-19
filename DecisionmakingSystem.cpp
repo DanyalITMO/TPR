@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "Decisionmaking.h"
 #include "iostream"
+#include <algorithm>
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -11,7 +13,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	std::cout << "domination";
 	const responseDomination domination_response = temp.domination();
-
+	
 	for (const auto& i : domination_response)
 	{
 		std::cout << std::endl <<"table: "<< i.first + 1 << ":";
@@ -33,6 +35,9 @@ int _tmain(int argc, _TCHAR* argv[])
 			std::cout << arg + 1 << ",";
 		}
 	}
+
+	temp.tournamentMechanism();
+	
 	system("Pause");
 	return 0;
 }
