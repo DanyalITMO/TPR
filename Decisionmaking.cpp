@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <numeric>
+#include <iomanip>
 
 Decionmaking::Decionmaking()
 {	
@@ -40,15 +41,6 @@ Decionmaking::Decionmaking()
 	});
 	
 	preferenceTables.push_back(std::vector < std::vector<byte> > {
-		(std::vector < byte > {0, 1, 0, 0, 0}),
-		(std::vector < byte > {0, 0, 0, 0, 0}),
-		(std::vector < byte > {0, 1, 0, 0, 0}),
-		(std::vector < byte > {1, 1, 1, 0, 0}),
-		(std::vector < byte > {1, 1, 1, 1, 0})
-	});
-
-
-	preferenceTables.push_back(std::vector < std::vector<byte> > {
 		(std::vector < byte > {0, 0, 0, 0, 0}),
 		(std::vector < byte > {0, 0, 0, 0, 0}),
 		(std::vector < byte > {0, 0, 0, 0, 0}),
@@ -64,6 +56,23 @@ Decionmaking::Decionmaking()
 		(std::vector < byte > {1, 1, 1, 0, 0})
 	});
 	
+	preferenceTables.push_back(std::vector < std::vector<byte> > {
+		(std::vector < byte > {0, 0, 1, 0, 0}),
+		(std::vector < byte > {0, 0, 1, 1, 0}),
+		(std::vector < byte > {0, 0, 0, 0, 0}),
+		(std::vector < byte > {0, 0, 1, 0, 0}),
+		(std::vector < byte > {1, 0, 1, 1, 0})
+	});
+
+	preferenceTables.push_back(std::vector < std::vector<byte> > {
+		(std::vector < byte > {0, 1, 1, 1, 0}),
+		(std::vector < byte > {0, 0, 1, 0, 0}),
+		(std::vector < byte > {0, 0, 0, 0, 0}),
+		(std::vector < byte > {0, 1, 1, 0, 0}),
+		(std::vector < byte > {1, 1, 1, 1, 0})
+	});
+
+
 }
 
 
@@ -134,4 +143,61 @@ const responseDomination Decionmaking::blocking()
 	return response;
 }
 
+void Decionmaking::tournamentMechanism()
+{
+	std::vector<std::vector<double>> AllSummVectors;
+
+
+	for (int number_of_table = 0; number_of_table < preferenceTables.size(); number_of_table++)
+	{
+		std::vector<double> row_sum;
+
+		for (auto& row_from_table : preferenceTables[number_of_table])
+		{
+			row_sum.push_back(std::accumulate(row_from_table.begin(), row_from_table.end(), 0) * criterions[number_of_table].second);
+		}
+
+		AllSummVectors.push_back(std::move(row_sum));
+	}
+	
+	//print first table
+//--
+	std::cout<<std::endl << std::setw(30) << " ";
+	for (auto& i : options)
+	{
+		std::cout << std::setw(25) << i;
+	}
+	for (int i = 0; i < AllSummVectors.size(); i++)
+	{
+		std::cout << std::endl;
+		std::cout << std::setw(30) << criterions.at(i).first;
+		for (const auto& arg : AllSummVectors.at(i))
+		{
+			std::cout<<std::setw(25) << arg;
+		}
+	}
+	std::cout << std::endl << std::endl;
+//---	
+		
+	std::vector<std::pair<std::string, double>> TMPair;
+
+	for (int i = 0; i < options.size(); i++)
+	{
+		double sum = 0;
+
+		std::for_each(AllSummVectors.begin(), AllSummVectors.end(), [&i, &sum](auto& row) {
+			sum += row.at(i);
+		});
+
+		TMPair.push_back(std::pair<std::string, double>(options.at(i), sum));
+	}
+	
+	std::sort(TMPair.begin(), TMPair.end(), [](const auto& arg1, const auto& arg2) {
+		return arg1.second > arg2.second;
+	});
+	for (auto& i : TMPair)
+	{
+		std::cout << i.first << ":" << i.second << std::endl;
+	}
+}
 
